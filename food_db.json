@@ -1,0 +1,48 @@
+{
+    "basic": {
+        "Bread": {
+            "calories": 120,
+            "keywords": [
+                "Bread"
+            ]
+        },
+        "Cheddar Cheese": {
+            "calories": 110,
+            "keywords": [
+                "cheese",
+                "dairy"
+            ]
+        },
+        "Whole Milk": {
+            "calories": 150,
+            "keywords": [
+                "milk",
+                "dairy"
+            ]
+        }
+    },
+    "composite": {
+        "Cheese Sandwich": {
+            "calories": 350,
+            "ingredients": {
+                "Bread": 2,
+                "Cheddar cheese": 1
+            },
+            "keywords": [
+                "cheese",
+                "sandwich"
+            ]
+        },
+        "Milkshake": {
+            "calories": 150,
+            "ingredients": {
+                "Sugar": 1,
+                "Whole Milk": 1
+            },
+            "keywords": [
+                "milk",
+                "shake"
+            ]
+        }
+    }
+}
