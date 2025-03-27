@@ -1,0 +1,51 @@
+{
+    "2025-03-26": [
+        {
+            "details": {
+                "calories": 350,
+                "ingredients": {
+                    "Bread": 2,
+                    "Cheddar cheese": 1
+                },
+                "keywords": [
+                    "cheese",
+                    "sandwich"
+                ]
+            },
+            "name": "Cheese Sandwich",
+            "servings": 1
+        }
+    ],
+    "2025-03-27": [
+        {
+            "details": {
+                "calories": 150,
+                "ingredients": {
+                    "Sugar": 1,
+                    "Whole Milk": 1
+                },
+                "keywords": [
+                    "milk",
+                    "shake"
+                ]
+            },
+            "name": "Milkshake",
+            "servings": 1
+        },
+        {
+            "details": {
+                "calories": 350,
+                "ingredients": {
+                    "Bread": 2,
+                    "Cheddar cheese": 1
+                },
+                "keywords": [
+                    "cheese",
+                    "sandwich"
+                ]
+            },
+            "name": "Cheese Sandwich",
+            "servings": 1
+        }
+    ]
+}
