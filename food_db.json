@@ -1,19 +1,86 @@
 {
     "basic": {
-        "Bread": {
-            "calories": 120,
+        "anana": {
+            "calories": 20,
             "keywords": [
-                "Bread"
+                "fruit",
+                "sweet"
             ]
         },
-        "Cheddar Cheese": {
+        "app": {
+            "calories": 30,
+            "keywords": [
+                "tyu",
+                "hjvkj"
+            ]
+        },
+        "apple": {
+            "calories": 40,
+            "keywords": [
+                "qwe",
+                "fyu"
+            ]
+        },
+        "bread": {
+            "calories": 20,
+            "keywords": [
+                "bread"
+            ]
+        },
+        "cheddar cheese": {
             "calories": 110,
             "keywords": [
                 "cheese",
                 "dairy"
             ]
         },
-        "Whole Milk": {
+        "chocolate": {
+            "calories": 30,
+            "keywords": [
+                "dairy",
+                "sweet"
+            ]
+        },
+        "d": {
+            "calories": 32,
+            "keywords": [
+                "2"
+            ]
+        },
+        "mango": {
+            "calories": 20,
+            "keywords": [
+                "fruit"
+            ]
+        },
+        "mayo": {
+            "calories": 30,
+            "keywords": [
+                "white",
+                "spread"
+            ]
+        },
+        "pple": {
+            "calories": 120,
+            "keywords": [
+                "Apple",
+                "Fruit"
+            ]
+        },
+        "qwe": {
+            "calories": 20,
+            "keywords": [
+                "qwe"
+            ]
+        },
+        "sugar": {
+            "calories": 20,
+            "keywords": [
+                "sweet",
+                "sugar"
+            ]
+        },
+        "whole milk": {
             "calories": 150,
             "keywords": [
                 "milk",
@@ -22,22 +89,87 @@
         }
     },
     "composite": {
-        "Cheese Sandwich": {
-            "calories": 350,
+        "anana shake": {
+            "calories": 72,
             "ingredients": {
-                "Bread": 2,
-                "Cheddar cheese": 1
+                "anana": 2,
+                "d": 1
             },
             "keywords": [
-                "cheese",
+                "sweet",
+                "beverage"
+            ]
+        },
+        "ango juice": {
+            "calories": 60,
+            "ingredients": {
+                "mango": 2,
+                "sugar": 1
+            },
+            "keywords": [
+                "sweet",
+                "beverage"
+            ]
+        },
+        "cheese sandwich": {
+            "calories": 150,
+            "ingredients": {
+                "bread": 2,
+                "cheddar cheese": 1
+            },
+            "keywords": [
+                "CHEese",
+                "Sandwich"
+            ]
+        },
+        "chocolate sandwich": {
+            "calories": 70,
+            "ingredients": {
+                "bread": 2,
+                "chocolate": 1
+            },
+            "keywords": [
+                "chocolate",
                 "sandwich"
             ]
         },
-        "Milkshake": {
-            "calories": 150,
+        "gfhg": {
+            "calories": 60,
             "ingredients": {
-                "Sugar": 1,
-                "Whole Milk": 1
+                "mango": 2,
+                "sugar": 1
+            },
+            "keywords": [
+                "vjhl"
+            ]
+        },
+        "mango juice": {
+            "calories": 60,
+            "ingredients": {
+                "mango": 2,
+                "sugar": 1
+            },
+            "keywords": [
+                "MANGO"
+            ]
+        },
+        "mayo sandwich": {
+            "calories": 70,
+            "ingredients": {
+                "bread": 2,
+                "mayo": 1
+            },
+            "keywords": [
+                "bread",
+                "white",
+                "spread"
+            ]
+        },
+        "milkshake": {
+            "calories": 170,
+            "ingredients": {
+                "sugar": 1,
+                "whole milk": 1
             },
             "keywords": [
                 "milk",

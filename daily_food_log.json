@@ -47,5 +47,109 @@
             "name": "Cheese Sandwich",
             "servings": 1
         }
+    ],
+    "2025-03-30": [
+        {
+            "details": {
+                "calories": 30,
+                "keywords": [
+                    "dairy",
+                    "sweet"
+                ]
+            },
+            "name": "chocolate",
+            "servings": 3
+        }
+    ],
+    "2025-03-31": [
+        {
+            "details": {
+                "calories": 70,
+                "ingredients": {
+                    "bread": 2,
+                    "mayo": 1
+                },
+                "keywords": [
+                    "bread",
+                    "white",
+                    "spread"
+                ]
+            },
+            "name": "mayo sandwich",
+            "servings": 1
+        },
+        {
+            "details": {
+                "calories": 70,
+                "ingredients": {
+                    "bread": 2,
+                    "mayo": 1
+                },
+                "keywords": [
+                    "bread",
+                    "white",
+                    "spread"
+                ]
+            },
+            "name": "mayo sandwich",
+            "servings": 1
+        },
+        {
+            "details": {
+                "calories": 70,
+                "ingredients": {
+                    "bread": 2,
+                    "mayo": 1
+                },
+                "keywords": [
+                    "bread",
+                    "white",
+                    "spread"
+                ]
+            },
+            "name": "mayo sandwich",
+            "servings": 1
+        }
+    ],
+    "2025-04-07": [
+        {
+            "details": {
+                "calories": 30,
+                "keywords": [
+                    "tyu",
+                    "hjvkj"
+                ]
+            },
+            "name": "app",
+            "servings": 2
+        },
+        {
+            "details": {
+                "calories": 30,
+                "keywords": [
+                    "tyu",
+                    "hjvkj"
+                ]
+            },
+            "id": "1744023864_1804289383",
+            "name": "app",
+            "servings": 2
+        },
+        {
+            "details": {
+                "calories": 150,
+                "ingredients": {
+                    "bread": 2,
+                    "cheddar cheese": 1
+                },
+                "keywords": [
+                    "CHEese",
+                    "Sandwich"
+                ]
+            },
+            "id": "1744024006_1804289383",
+            "name": "cheese sandwich",
+            "servings": 1
+        }
     ]
 }
