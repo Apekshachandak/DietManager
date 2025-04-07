@@ -1,5 +1,12 @@
 {
     "basic": {
+        "almonds": {
+            "calories": 70,
+            "keywords": [
+                "dryfruits",
+                "almonds"
+            ]
+        },
         "anana": {
             "calories": 20,
             "keywords": [
@@ -15,10 +22,15 @@
             ]
         },
         "apple": {
-            "calories": 40,
+            "calories": 123,
             "keywords": [
-                "qwe",
-                "fyu"
+                "fruit"
+            ]
+        },
+        "banana": {
+            "calories": 150,
+            "keywords": [
+                "fruit"
             ]
         },
         "bread": {
@@ -39,6 +51,13 @@
             "keywords": [
                 "dairy",
                 "sweet"
+            ]
+        },
+        "coke": {
+            "calories": 150,
+            "keywords": [
+                "colddrink",
+                "coke"
             ]
         },
         "d": {
@@ -73,11 +92,29 @@
                 "qwe"
             ]
         },
+        "salt": {
+            "calories": 11,
+            "keywords": [
+                "salt"
+            ]
+        },
+        "strawberry": {
+            "calories": 345,
+            "keywords": [
+                "berry"
+            ]
+        },
         "sugar": {
             "calories": 20,
             "keywords": [
                 "sweet",
                 "sugar"
+            ]
+        },
+        "water": {
+            "calories": 11,
+            "keywords": [
+                "water"
             ]
         },
         "whole milk": {
