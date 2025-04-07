@@ -1070,25 +1070,25 @@ public:
     }
 
 private:
-    void displayMainMenu()
-    {
-        cout << "\n===== Diet Manager Application =====\n";
-        cout << "1. Add Basic Food\n";
-        cout << "2. Add Composite Food\n";
-        cout << "3. View All Foods\n";
-        cout << "4. Add Food to Daily Log\n";
-        cout << "5. View Daily Food Log\n";
-        cout << "6. Remove Food from Log\n";
-        cout << "7. Update Profile Information\n";
-        cout << "8. Change Calorie Calculation Method\n";
-        cout << "9. View Calorie Summary\n";
-        cout << "10. Set Date\n";
-        cout << "11. Undo Last Action\n";
-        cout << "12. Redo Last Action\n";
-        cout << "13. Save Database\n";
-        cout << "0. Exit\n";
-        cout << "Enter your choice: ";
-    }
+void displayMainMenu()
+{
+    cout << "\n===== Diet Manager Application =====\n";
+    cout << left << setw(5) << "1." << "Add Basic Food\n";
+    cout << left << setw(5) << "2." << "Add Composite Food\n";
+    cout << left << setw(5) << "3." << "View All Foods\n";
+    cout << left << setw(5) << "4." << "Add Food to Daily Log\n";
+    cout << left << setw(5) << "5." << "View Daily Food Log\n";
+    cout << left << setw(5) << "6." << "Remove Food from Log\n";
+    cout << left << setw(5) << "7." << "Update Profile Information\n";
+    cout << left << setw(5) << "8." << "Change Calorie Calculation Method\n";
+    cout << left << setw(5) << "9." << "View Calorie Summary\n";
+    cout << left << setw(5) << "10." << "Set Date\n";
+    cout << left << setw(5) << "11." << "Undo Last Action\n";
+    cout << left << setw(5) << "12." << "Redo Last Action\n";
+    cout << left << setw(5) << "13." << "Save Database\n";
+    cout << left << setw(5) << "0." << "Exit\n";
+    cout << "Enter your choice: ";
+}
 
     void processMenuChoice(int choice)
     {
@@ -1170,38 +1170,49 @@ private:
     }
 
     void viewAllFoods()
+{
+    json allFoods = foodDb.getAllFoods();
+
+    cout << "\n===== Basic Foods =====\n";
+    cout << left << setw(20) << "Name" << setw(40) << "Keywords" << setw(10) << "Calories" << "\n";
+    cout << string(70, '-') << "\n";
+
+    for (auto &[name, details] : allFoods["basic"].items())
     {
-        json allFoods = foodDb.getAllFoods();
+        cout << left << setw(20) << name;
 
-        cout << "\n===== Basic Foods =====\n";
-        for (auto &[name, details] : allFoods["basic"].items())
+        string keywords;
+        for (auto &keyword : details["keywords"])
         {
-            cout << "Name: " << name << "\n";
-            cout << "Keywords: ";
-            for (auto &keyword : details["keywords"])
-            {
-                cout << keyword << " ";
-            }
-            cout << "\nCalories: " << details["calories"] << "\n\n";
+            keywords += keyword.get<string>() + ", ";
         }
+        if (!keywords.empty())
+            keywords.pop_back(), keywords.pop_back(); // Remove trailing ", "
 
-        cout << "\n===== Composite Foods =====\n";
-        for (auto &[name, details] : allFoods["composite"].items())
-        {
-            cout << "Name: " << name << "\n";
-            cout << "Keywords: ";
-            for (auto &keyword : details["keywords"])
-            {
-                cout << keyword << " ";
-            }
-            cout << "\nIngredients:\n";
-            for (auto &[ingredient, servings] : details["ingredients"].items())
-            {
-                cout << "  " << ingredient << ": " << servings << " serving(s)\n";
-            }
-            cout << "Calories: " << details["calories"] << "\n\n";
-        }
+        cout << setw(40) << keywords;
+        cout << setw(10) << details["calories"] << "\n";
     }
+
+    cout << "\n===== Composite Foods =====\n";
+    cout << left << setw(20) << "Name" << setw(40) << "Keywords" << setw(10) << "Calories" << "\n";
+    cout << string(70, '-') << "\n";
+
+    for (auto &[name, details] : allFoods["composite"].items())
+    {
+        cout << left << setw(20) << name;
+
+        string keywords;
+        for (auto &keyword : details["keywords"])
+        {
+            keywords += keyword.get<string>() + ", ";
+        }
+        if (!keywords.empty())
+            keywords.pop_back(), keywords.pop_back(); // Remove trailing ", "
+
+        cout << setw(40) << keywords;
+        cout << setw(10) << details["calories"] << "\n";
+    }
+}
 
     void addFoodToLog()
     {
@@ -1338,16 +1349,18 @@ private:
     {
         string date = userProfile.getDate();
         json dailyLog = foodLog.viewDailyLog(date);
-
+    
         if (dailyLog.is_null() || dailyLog.empty())
         {
             cout << "No food entries for " << date << "\n";
             return;
         }
-
-        int totalCalories = 0;
+    
         cout << "\n===== Food Log for " << date << " =====\n";
-
+        cout << left << setw(5) << "No." << setw(20) << "Food Name" << setw(10) << "Servings" << setw(15) << "Calories/Serving" << setw(15) << "Total Calories" << "\n";
+        cout << string(70, '-') << "\n";
+    
+        int totalCalories = 0;
         int index = 1;
         for (const auto &entry : dailyLog)
         {
@@ -1355,23 +1368,20 @@ private:
             int servings = entry["servings"];
             int calories = entry["details"]["calories"];
             int entryCalories = servings * calories;
-
-            cout << index << ". " << foodName << " - " << servings << " serving(s) - "
-                 << calories << " calories/serving - " << entryCalories << " total calories";
-
-            if (entry.contains("id"))
-            {
-                cout << " (ID: " << entry["id"] << ")";
-            }
-
-            cout << "\n";
+    
+            cout << left << setw(5) << index
+                 << setw(20) << foodName
+                 << setw(10) << servings
+                 << setw(15) << calories
+                 << setw(15) << entryCalories << "\n";
+    
             totalCalories += entryCalories;
             index++;
         }
-
-        cout << "\nTotal Calories: " << totalCalories << "\n";
+    
+        cout << string(70, '-') << "\n";
+        cout << "Total Calories: " << totalCalories << "\n";
     }
-
     void removeFoodFromLog()
     {
         string date = userProfile.getDate();
@@ -1474,42 +1484,42 @@ private:
     }
 
     void viewCalorieSummary()
+{
+    string date = userProfile.getDate();
+    int targetCalories = userProfile.calculateDailyCalorieTarget();
+    int consumedCalories = foodLog.getDailyCalories(date);
+    int difference = consumedCalories - targetCalories;
+
+    cout << "\n===== Calorie Summary for " << date << " =====\n";
+    cout << left << setw(25) << "Target Calorie Intake" << ": " << targetCalories << " calories\n";
+    cout << left << setw(25) << "Total Calories Consumed" << ": " << consumedCalories << " calories\n";
+    cout << left << setw(25) << "Difference" << ": " << difference << " calories\n";
+
+    if (difference < 0)
     {
-        string date = userProfile.getDate();
-        int targetCalories = userProfile.calculateDailyCalorieTarget();
-        int consumedCalories = foodLog.getDailyCalories(date);
-        int difference = consumedCalories - targetCalories;
-
-        cout << "\n===== Calorie Summary for " << date << " =====\n";
-        cout << "Target calorie intake: " << targetCalories << " calories\n";
-        cout << "Total calories consumed: " << consumedCalories << " calories\n";
-        cout << "Difference: " << difference << " calories\n";
-
-        if (difference < 0)
-        {
-            cout << "You have " << -difference << " calories available for the day.\n";
-        }
-        else if (difference > 0)
-        {
-            cout << "You have consumed " << difference << " calories over your target.\n";
-        }
-        else
-        {
-            cout << "You have exactly met your calorie target for the day.\n";
-        }
-
-        // Additional calculation method information
-        cout << "\nCalorie calculation method: " << calculator->getName() << "\n";
-
-        // Display basic profile info
-        json profileData = userProfile.getDailyData();
-        cout << "\nCurrent profile settings:\n";
-        cout << "Gender: " << profileData["gender"].get<string>() << "\n";
-        cout << "Height: " << profileData["height"].get<int>() << " cm\n";
-        cout << "Age: " << profileData["age"].get<int>() << " years\n";
-        cout << "Weight: " << profileData["weight"].get<int>() << " kg\n";
-        cout << "Activity level: " << profileData["activityLevel"].get<string>() << "\n";
+        cout << "You have " << -difference << " calories available for the day.\n";
     }
+    else if (difference > 0)
+    {
+        cout << "You have consumed " << difference << " calories over your target.\n";
+    }
+    else
+    {
+        cout << "You have exactly met your calorie target for the day.\n";
+    }
+
+    // Additional calculation method information
+    cout << "\nCalorie calculation method: " << calculator->getName() << "\n";
+
+    // Display basic profile info
+    json profileData = userProfile.getDailyData();
+    cout << "\nCurrent profile settings:\n";
+    cout << left << setw(20) << "Gender" << ": " << profileData["gender"].get<string>() << "\n";
+    cout << left << setw(20) << "Height" << ": " << profileData["height"].get<int>() << " cm\n";
+    cout << left << setw(20) << "Age" << ": " << profileData["age"].get<int>() << " years\n";
+    cout << left << setw(20) << "Weight" << ": " << profileData["weight"].get<int>() << " kg\n";
+    cout << left << setw(20) << "Activity Level" << ": " << profileData["activityLevel"].get<string>() << "\n";
+}
 };
 
 // Main function
