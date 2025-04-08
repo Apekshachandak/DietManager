@@ -926,55 +926,148 @@ public:
         commandManager.executeCommand(doCmd, undoCmd);
     }
 
-    void removeFoodFromLog(const string &date, const string &entryId)
+    void updateServingsInLog(const string &date, int index, int newServings)
     {
-        // Find the entry in the log
-        json entryToRemove;
-        int indexToRemove = -1;
-
-        if (!logData[date].is_null())
+        if (logData[date].is_null() || index < 0 || index >= logData[date].size())
         {
-            for (int i = 0; i < logData[date].size(); i++)
-            {
-                if (logData[date][i]["id"] == entryId)
-                {
-                    entryToRemove = logData[date][i];
-                    indexToRemove = i;
-                    break;
-                }
-            }
-        }
-
-        if (indexToRemove == -1)
-        {
-            cout << "Entry not found!\n";
+            cout << "Invalid entry index!\n";
             return;
         }
 
+        // Store the old servings for undo functionality
+        int oldServings = logData[date][index]["servings"];
+        
         // Create the do command
-        auto doCmd = [this, date, indexToRemove]()
+        auto doCmd = [this, date, index, newServings]()
         {
-            if (!logData[date].is_null() && indexToRemove >= 0 && indexToRemove < logData[date].size())
-            {
-                logData[date].erase(logData[date].begin() + indexToRemove);
-                saveLog();
-            }
+            logData[date][index]["servings"] = newServings;
+            saveLog();
         };
 
         // Create the undo command
-        auto undoCmd = [this, date, indexToRemove, entryToRemove]()
+        auto undoCmd = [this, date, index, oldServings]()
+        {
+            logData[date][index]["servings"] = oldServings;
+            saveLog();
+        };
+
+        commandManager.executeCommand(doCmd, undoCmd);
+    }
+
+    void removeFoodFromLog()
+    {
+        // string date = userProfile.getDate();
+        // json dailyLog = foodLog.viewDailyLog(date);
+
+        // if (dailyLog.is_null() || dailyLog.empty())
+        // {
+        //     cout << "No food entries for " << date << "\n";
+        //     return;
+        // }
+
+        // // Display the food log with numbers
+        // cout << "\n===== Food Log for " << date << " =====\n";
+        // for (int i = 0; i < dailyLog.size(); i++)
+        // {
+        //     string foodName = dailyLog[i]["name"];
+        //     int servings = dailyLog[i]["servings"];
+        //     cout << (i + 1) << ". " << foodName << " (" << servings << " servings)\n";
+        // }
+
+        // // Ask for selection
+        // int selection;
+        // cout << "\nSelect entry to remove (enter number): ";
+        // while (!(cin >> selection) || selection < 1 || selection > dailyLog.size())
+        // {
+        //     cin.clear();
+        //     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        //     cout << "Invalid input! Enter a number between 1 and " << dailyLog.size() << ": ";
+        // }
+        // cin.ignore();
+
+        // // Convert to zero-based index
+        // int arrayIndex = selection - 1;
+
+        // // Get the selected food entry
+        // string foodName = dailyLog[arrayIndex]["name"];
+        // int currentServings = dailyLog[arrayIndex]["servings"];
+
+        // // Ask for the number of servings to remove
+        // int servingsToRemove;
+        // cout << "Enter the number of servings to remove: ";
+        // while (!(cin >> servingsToRemove) || servingsToRemove <= 0)
+        // {
+        //     cin.clear();
+        //     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        //     cout << "Invalid input! Enter a positive number: ";
+        // }
+        // cin.ignore();
+
+        // // Check if the servings to remove exceed the current servings
+        // if (servingsToRemove > currentServings)
+        // {
+        //     cout << "Error: Cannot remove more servings than currently present (" << currentServings << " servings).\n";
+        //     return;
+        // }
+
+        // // Update the servings in the log
+        // if (servingsToRemove == currentServings)
+        // {
+        //     // Remove the entry completely if all servings are removed
+        //     foodLog.removeFoodFromLogByIndex(date, arrayIndex);
+        //     cout << "Entry removed successfully.\n";
+        // }
+        // else
+        // {
+        //     // Update the servings in the log
+        //     dailyLog[arrayIndex]["servings"] = currentServings - servingsToRemove;
+        //     foodLog.saveLog();
+        //     cout << "Updated servings for " << foodName << " to " << (currentServings - servingsToRemove) << " servings.\n";
+        // }
+
+        // // Update the servings in the database
+        // json allFoods = foodDb.getAllFoods();
+        // if (allFoods["basic"].contains(foodName))
+        // {
+        //     // Update servings in the basic food category
+        //     allFoods["basic"][foodName]["servings"] = currentServings - servingsToRemove;
+        // }
+        // else if (allFoods["composite"].contains(foodName))
+        // {
+        //     // Update servings in the composite food category
+        //     allFoods["composite"][foodName]["servings"] = currentServings - servingsToRemove;
+        // }
+        // foodDb.saveDatabase();
+    }
+
+    void removeFoodFromLogByIndex(const string &date, int index)
+    {
+        if (logData[date].is_null() || index < 0 || index >= logData[date].size())
+        {
+            cout << "Invalid entry index!\n";
+            return;
+        }
+
+        // Store the entry for undo functionality
+        json entryToRemove = logData[date][index];
+
+        // Create the do command
+        auto doCmd = [this, date, index]()
+        {
+            logData[date].erase(logData[date].begin() + index);
+            saveLog();
+        };
+
+        // Create the undo command
+        auto undoCmd = [this, date, index, entryToRemove]()
         {
             if (logData[date].is_null())
             {
                 logData[date] = json::array();
             }
-
-            if (indexToRemove >= 0 && indexToRemove <= logData[date].size())
-            {
-                // Insert at the original position
-                logData[date].insert(logData[date].begin() + indexToRemove, entryToRemove);
-                saveLog();
-            }
+            // Insert back at the same position
+            logData[date].insert(logData[date].begin() + index, entryToRemove);
+            saveLog();
         };
 
         commandManager.executeCommand(doCmd, undoCmd);
@@ -1393,39 +1486,68 @@ void displayMainMenu()
             return;
         }
 
+        // Display the food log with numbers
         cout << "\n===== Food Log for " << date << " =====\n";
-
-        int index = 1;
-        map<int, string> entryIdMap;
-
-        for (const auto &entry : dailyLog)
+        for (int i = 0; i < dailyLog.size(); i++)
         {
-            string foodName = entry["name"];
-            int servings = entry["servings"];
-            string entryId = entry["id"];
-
-            cout << index << ". " << foodName << " - " << servings << " serving(s) "
-                 << " (ID: " << entryId << ")\n";
-
-            entryIdMap[index] = entryId;
-            index++;
+            string foodName = dailyLog[i]["name"];
+            int servings = dailyLog[i]["servings"];
+            cout << (i + 1) << ". " << foodName << " (" << servings << " servings)\n";
         }
 
-        int selectedIndex;
-        cout << "\nSelect an entry to remove (enter index): ";
-
-        while (!(cin >> selectedIndex) || selectedIndex < 1 || selectedIndex >= index)
+        // Ask for selection
+        int selection;
+        cout << "\nSelect entry to remove (enter number): ";
+        while (!(cin >> selection) || selection < 1 || selection > dailyLog.size())
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input! Enter a number between 1 and " << (index - 1) << ": ";
+            cout << "Invalid input! Enter a number between 1 and " << dailyLog.size() << ": ";
         }
         cin.ignore();
 
-        string entryId = entryIdMap[selectedIndex];
-        foodLog.removeFoodFromLog(date, entryId);
+        // Convert to zero-based index
+        int arrayIndex = selection - 1;
 
-        cout << "Entry removed successfully.\n";
+        // Get the selected food entry
+        string foodName = dailyLog[arrayIndex]["name"];
+        int currentServings = dailyLog[arrayIndex]["servings"];
+
+        // Ask for the number of servings to remove
+        int servingsToRemove;
+        cout << "Enter the number of servings to remove: ";
+        while (!(cin >> servingsToRemove) || servingsToRemove <= 0)
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input! Enter a positive number: ";
+        }
+        cin.ignore();
+
+        // Check if the servings to remove exceed the current servings
+        if (servingsToRemove > currentServings)
+        {
+            cout << "Error: Cannot remove more servings than currently present (" << currentServings << " servings).\n";
+            return;
+        }
+
+        // Update the servings in the log
+        if (servingsToRemove == currentServings)
+        {
+            // Remove the entry completely if all servings are removed
+            foodLog.removeFoodFromLogByIndex(date, arrayIndex);
+            cout << "Entry removed successfully.\n";
+        }
+        else
+        {
+            // Update the servings in the log using the new method
+            int newServings = currentServings - servingsToRemove;
+            foodLog.updateServingsInLog(date, arrayIndex, newServings);
+            cout << "Updated servings for " << foodName << " to " << newServings << " servings.\n";
+        }
+
+        // No need to update the food database servings - those should be independent
+        // of the log entries, as they represent the database of foods, not consumption.
     }
 
     void updateProfile()

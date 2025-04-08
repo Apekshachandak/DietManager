@@ -77,64 +77,9 @@
             },
             "name": "mayo sandwich",
             "servings": 1
-        },
-        {
-            "details": {
-                "calories": 70,
-                "ingredients": {
-                    "bread": 2,
-                    "mayo": 1
-                },
-                "keywords": [
-                    "bread",
-                    "white",
-                    "spread"
-                ]
-            },
-            "name": "mayo sandwich",
-            "servings": 1
-        },
-        {
-            "details": {
-                "calories": 70,
-                "ingredients": {
-                    "bread": 2,
-                    "mayo": 1
-                },
-                "keywords": [
-                    "bread",
-                    "white",
-                    "spread"
-                ]
-            },
-            "name": "mayo sandwich",
-            "servings": 1
         }
     ],
     "2025-04-07": [
-        {
-            "details": {
-                "calories": 30,
-                "keywords": [
-                    "tyu",
-                    "hjvkj"
-                ]
-            },
-            "name": "app",
-            "servings": 2
-        },
-        {
-            "details": {
-                "calories": 30,
-                "keywords": [
-                    "tyu",
-                    "hjvkj"
-                ]
-            },
-            "id": "1744023864_1804289383",
-            "name": "app",
-            "servings": 2
-        },
         {
             "details": {
                 "calories": 150,
